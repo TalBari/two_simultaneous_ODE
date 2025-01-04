@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { evaluate } from 'mathjs';
 import { InitialPointSelector } from './InitialPointSelector';
 
 interface ControlsProps {

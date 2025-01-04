@@ -68,25 +68,20 @@ export const DirectorField = ({
         const normalizedDirT = dirT / dirMagnitude;
 
         // Calculate two perpendicular vectors for the arrowhead
-        const perp1X = normalizedDirT;
-        const perp1Y = 0;
-        const perp1T = -normalizedDirX;
-
-        const perp2X = 0;
-        const perp2Y = normalizedDirT;
-        const perp2T = -normalizedDirY;
+        const perp1X = -dy;
+        const perp2Y = dy;
 
         // Create arrowhead points
         const rightHead: [number, number, number] = [
           end[0] - (normalizedDirX * Math.cos(arrowHeadAngle) + perp1X * Math.sin(arrowHeadAngle)) * arrowHeadLength,
           end[1] - normalizedDirY * Math.cos(arrowHeadAngle) * arrowHeadLength,
-          end[2] - (normalizedDirT * Math.cos(arrowHeadAngle) + perp1T * Math.sin(arrowHeadAngle)) * arrowHeadLength
+          end[2] - (normalizedDirT * Math.cos(arrowHeadAngle) + (-dy) * Math.sin(arrowHeadAngle)) * arrowHeadLength
         ];
 
         const leftHead: [number, number, number] = [
           end[0] - normalizedDirX * Math.cos(arrowHeadAngle) * arrowHeadLength,
           end[1] - (normalizedDirY * Math.cos(arrowHeadAngle) + perp2Y * Math.sin(arrowHeadAngle)) * arrowHeadLength,
-          end[2] - (normalizedDirT * Math.cos(arrowHeadAngle) + perp2T * Math.sin(arrowHeadAngle)) * arrowHeadLength
+          end[2] - (normalizedDirT * Math.cos(arrowHeadAngle) + dy * Math.sin(arrowHeadAngle)) * arrowHeadLength
         ];
         
         return [

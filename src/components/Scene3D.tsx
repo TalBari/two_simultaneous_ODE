@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Line, Text, Grid, PlaneGeometry, MeshBasicMaterial } from '@react-three/drei';
+import { OrbitControls, Grid as DreiGrid, Line, Text, PlaneGeometry, MeshBasicMaterial } from '@react-three/drei';
 import { Trajectory } from './Trajectory';
 import { DirectorField } from './DirectorField';
 import { VectorField2D } from './VectorField2D';
@@ -79,13 +79,13 @@ export const Scene3D = ({
       
       {/* Grid in x-y plane */}
       <group>
-        <gridHelper 
+        <DreiGrid 
           args={[grid.size, grid.divisions, grid.primaryColor, grid.secondaryColor]} 
           position={[0, 0, 0]}
           rotation={[Math.PI / 2, 0, 0]}
         >
           <meshBasicMaterial attach="material" transparent opacity={grid.opacity} />
-        </gridHelper>
+        </DreiGrid>
       </group>
       
       {/* Axes */}

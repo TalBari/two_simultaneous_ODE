@@ -10,6 +10,26 @@ interface Trajectory {
   speed: number;
 }
 
+interface VectorField2DSettings {
+  density: number;
+  scale: number;
+  showPlanes: 'xy' | 'xt' | 'yt' | 'all';
+  width: number;
+  visible: boolean;
+  color: string;
+  grid: {
+    xMin: number;
+    xMax: number;
+    yMin: number;
+    yMax: number;
+    tMin: number;
+    tMax: number;
+    xSpacing: number;
+    ySpacing: number;
+    tSpacing: number;
+  }
+}
+
 function App() {
   const [trajectories, setTrajectories] = useState<Trajectory[]>([]);
   
@@ -47,12 +67,24 @@ function App() {
     secondaryColor: '#4f4f4f'
   });
 
-  const [vectorField2D, setVectorField2D] = useState({
+  const [vectorField2DSettings, setVectorField2DSettings] = useState<VectorField2DSettings>({
+    density: 10,
+    scale: 0.5,
+    showPlanes: 'xy' as const,
+    width: 0.5,
     visible: false,
-    scale: 1,
-    width: 1.0,
-    density: 1,
-    color: '#00ffff'
+    color: '#00ffff',
+    grid: {
+      xMin: -5,
+      xMax: 5,
+      yMin: -5,
+      yMax: 5,
+      tMin: -5,
+      tMax: 5,
+      xSpacing: 1,
+      ySpacing: 1,
+      tSpacing: 1
+    }
   });
 
   const [t0, setT0] = useState(0);
@@ -151,8 +183,8 @@ function App() {
     setGrid(newSettings);
   }, []);
 
-  const handleVectorField2DUpdate = useCallback((settings: typeof vectorField2D) => {
-    setVectorField2D(settings);
+  const handleVectorField2DUpdate = useCallback((settings: VectorField2DSettings) => {
+    setVectorField2DSettings(settings);
   }, []);
 
   const handleT0Update = useCallback((newT0: number) => {
@@ -186,7 +218,7 @@ function App() {
           onUpdateT0={handleT0Update}
           directorField={directorField}
           grid={grid}
-          vectorField2D={vectorField2D}
+          vectorField2D={vectorField2DSettings}
           t0={t0}
         />
       </div>
@@ -200,7 +232,7 @@ function App() {
           equations={equations}
           directorField={directorField}
           grid={grid}
-          vectorField2D={vectorField2D}
+          vectorField2D={vectorField2DSettings}
           t0={t0}
         />
       </div>
