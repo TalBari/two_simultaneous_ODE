@@ -1,8 +1,9 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Line, Text, Grid, PlaneGeometry, MeshBasicMaterial } from '@react-three/drei';
+import { OrbitControls, Line, Text } from '@react-three/drei';
 import { Trajectory } from './Trajectory';
 import { DirectorField } from './DirectorField';
 import { VectorField2D } from './VectorField2D';
+import { Vector3 } from 'three';
 
 interface Scene3DProps {
   trajectories: Array<{
@@ -61,6 +62,31 @@ export const Scene3D = ({
   const xAxisPoints = [[-10, 0, 0], [10, 0, 0]];
   const yAxisPoints = [[0, -10, 0], [0, 10, 0]];
   const tAxisPoints = [[0, 0, -10], [0, 0, 10]];
+
+  // Create grid lines
+  const gridLines = {
+    x: Array(grid.divisions).fill(0).map((_, i) => {
+      const x = (i / grid.divisions) * grid.size - grid.size / 2;
+      return Array(grid.divisions).fill(0).map((_, j) => {
+        const y = (j / grid.divisions) * grid.size - grid.size / 2;
+        return [x, y, 0];
+      });
+    }),
+    y: Array(grid.divisions).fill(0).map((_, i) => {
+      const y = (i / grid.divisions) * grid.size - grid.size / 2;
+      return Array(grid.divisions).fill(0).map((_, j) => {
+        const x = (j / grid.divisions) * grid.size - grid.size / 2;
+        return [x, y, 0];
+      });
+    }),
+    t: Array(grid.divisions).fill(0).map((_, i) => {
+      const t = (i / grid.divisions) * grid.size - grid.size / 2;
+      return Array(grid.divisions).fill(0).map((_, j) => {
+        const x = (j / grid.divisions) * grid.size - grid.size / 2;
+        return [x, 0, t];
+      });
+    }),
+  };
 
   return (
     <Canvas
@@ -134,6 +160,39 @@ export const Scene3D = ({
         >
           T
         </Text>
+      </group>
+
+      {/* Grid lines */}
+      <group>
+        {/* X-axis grid lines */}
+        {gridLines.x.map((points, i) => (
+          <Line
+            key={`x-${i}`}
+            points={points.map(([x, y, z]) => new Vector3(x, y, z))}
+            color="#444444"
+            lineWidth={1}
+          />
+        ))}
+        
+        {/* Y-axis grid lines */}
+        {gridLines.y.map((points, i) => (
+          <Line
+            key={`y-${i}`}
+            points={points.map(([x, y, z]) => new Vector3(x, y, z))}
+            color="#444444"
+            lineWidth={1}
+          />
+        ))}
+        
+        {/* T-axis grid lines */}
+        {gridLines.t.map((points, i) => (
+          <Line
+            key={`t-${i}`}
+            points={points.map(([x, y, z]) => new Vector3(x, y, z))}
+            color="#444444"
+            lineWidth={1}
+          />
+        ))}
       </group>
 
       {/* Director Field */}

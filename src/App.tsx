@@ -26,6 +26,7 @@ function App() {
     width: 0.05,
     visible: false,
     color: '#ff0000',
+    showPlanes: 'all' as 'xy' | 'xt' | 'yt' | 'all',
     grid: {
       xMin: -5,
       xMax: 5,

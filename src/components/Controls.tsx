@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { evaluate } from 'mathjs';
+import React from 'react';
 import { InitialPointSelector } from './InitialPointSelector';
 
 interface ControlsProps {
@@ -89,18 +88,18 @@ export const Controls = ({
   onUpdateT0,
   t0
 }: ControlsProps) => {
-  const [equations, setEquations] = useState({
+  const [equations, setEquations] = React.useState({
     dx: 'y',
     dy: '-x'
   });
   
-  const [speed, setSpeed] = useState(1);
+  const [speed, setSpeed] = React.useState(1);
   
-  const [gridSize, setGridSize] = useState(grid.size);
-  const [gridDivisions, setGridDivisions] = useState(grid.divisions);
-  const [gridOpacity, setGridOpacity] = useState(grid.opacity);
-  const [gridPrimaryColor, setGridPrimaryColor] = useState(grid.primaryColor);
-  const [gridSecondaryColor, setGridSecondaryColor] = useState(grid.secondaryColor);
+  const [gridSize, setGridSize] = React.useState(grid.size);
+  const [gridDivisions, setGridDivisions] = React.useState(grid.divisions);
+  const [gridOpacity, setGridOpacity] = React.useState(grid.opacity);
+  const [gridPrimaryColor, setGridPrimaryColor] = React.useState(grid.primaryColor);
+  const [gridSecondaryColor, setGridSecondaryColor] = React.useState(grid.secondaryColor);
 
   const handleEquationChange = (type: 'dx' | 'dy', value: string) => {
     const newEquations = { ...equations, [type]: value };
